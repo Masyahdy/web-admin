@@ -1,0 +1,16 @@
+body {
+  background-color: rgb(234, 245, 78);
+}
+
+.form-control {
+  background-color: rgb(216, 218, 223);
+}
+
+.kotak {
+  background-color: white;
+  margin: 150px;
+}
+
+p {
+  color: rgb(119, 119, 117);
+}
