@@ -2,6 +2,12 @@
 require 'function.php';
 $product = query("SELECT * FROM product_elektronik");
 
+// jika tombol cari ditekan
+if (isset($_POST["cari"])){
+    $product = cari($_POST["keyword"]);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +44,10 @@ $product = query("SELECT * FROM product_elektronik");
             <a class="nav-link" href="tambah.php">Tambah Data</a>
             </li>
         </ul>
-        <a href="index.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
+            <form class="d-flex ms-auto" action="" method="post">
+                <input class="form-control me-2" type="search" placeholder="ketik keyword yang dicari" aria-label="Search" size="40" name="keyword" autofocus autocomplete="off">
+                <button class="btn btn-outline-warning" type="submit" name="cari">Search</button>
+            </form>
         </div>
     </div>
     </nav>
@@ -53,6 +62,9 @@ $product = query("SELECT * FROM product_elektronik");
             <div class="col-6">
                  <h1>Selamat datang Admin</h1>
                  <p> <?php echo date("l, d-M-Y");?> </p>
+            </div>
+            <div class="col-6 mt-2 text-end">
+                 <a href="index.php"><button type="submit" class="btn btn-danger">Logout</button></a>
             </div>
         </div>
     </div>

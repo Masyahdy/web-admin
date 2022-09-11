@@ -67,4 +67,16 @@ function ubah ($data){
 
 }
 
+function cari ($keyword){
+    $query = "SELECT * FROM product_elektronik
+              WHERE 
+              product LIKE '%$keyword%' OR
+              nama LIKE '%$keyword%' OR
+              kondisi LIKE '%$keyword%' OR
+              harga LIKE '%$keyword%'
+              ";
+    return query($query);
+}
+
+
 ?>

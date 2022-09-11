@@ -3,6 +3,12 @@ require 'function.php';
 // ini untuk daftar product
 $product = query("SELECT * FROM product_elektronik");
 
+// ini untuk cari
+// jika tombol cari ditekan
+if (isset($_POST["cari"])){
+    $product = cari($_POST["keyword"]);
+}
+
 // ini untuk tambah data
 // cek apakan submit sudah ditekan?
 if (isset ($_POST["submit"])){
@@ -59,7 +65,10 @@ if (isset ($_POST["submit"])){
             <a class="nav-link active" href="">Tambah Data</a>
             </li>
         </ul>
-        <a href="index.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
+            <form class="d-flex ms-auto" action="" method="post">
+                <input class="form-control me-2" type="search" placeholder="ketik keyword yang dicari" aria-label="Search" size="40" name="keyword" autofocus autocomplete="off">
+                <button class="btn btn-outline-warning" type="submit" name="cari">Search</button>
+            </form>
         </div>
     </div>
     </nav>
@@ -71,9 +80,12 @@ if (isset ($_POST["submit"])){
    <section id="header">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-6">
                  <h1>Tambah Data</h1>
                  <p> <?php echo date("l, d-M-Y");?> </p>
+            </div>
+            <div class="col-6 mt-2 text-end">
+                 <a href="index.php"><button type="submit" class="btn btn-danger">Logout</button></a>
             </div>
         </div>
     </div>
