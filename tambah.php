@@ -97,7 +97,7 @@ if (isset ($_POST["submit"])){
     <div class="container">
         <div class="row">
             <div class="col-5">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                 <div class="mb-2">
                     <label for="product" class="form-label">Product</label>
                     <input type="text" class="form-control" id="product" name="product" required>
@@ -116,7 +116,7 @@ if (isset ($_POST["submit"])){
                 </div>
                 <div class="mb-2">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="text" class="form-control" id="product" name="gambar" required>
+                    <input type="file" class="form-control" id="product" name="gambar">
                 </div>
                 <button type="submit" class="btn btn-primary" name="submit">Tambah Data</button>
                 </form>

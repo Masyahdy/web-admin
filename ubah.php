@@ -93,8 +93,9 @@ if (isset ($_POST["submit"])){
      <div class="container">
         <div class="row">
             <div class="col-5">
-                <form action="" method="post">
-                <input type="hidden" name="id" value="<?= $product["id"] ?>">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?= $product["id"] ?>">
+                    <input type="hidden" name="gambarLama" value="<?= $product["gambar"] ?>">
                 <div class="mb-2">
                     <label for="product" class="form-label">Product</label>
                     <input type="text" class="form-control" id="product" name="product" required value="<?= $product["product"] ?>">
@@ -107,16 +108,22 @@ if (isset ($_POST["submit"])){
                     <label for="harga" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="product" name="harga" required value="<?= $product["harga"] ?>">
                 </div>
-                <div class="mb-2">
+                <div class="mb-4">
                     <label for="kondisi" class="form-label">Kondisi</label>
                     <input type="text" class="form-control" id="product" name="kondisi" required value="<?= $product["kondisi"] ?>">
                 </div>
-                <div class="mb-2">
-                    <label for="gambar" class="form-label">Gambar</label>
-                    <input type="text" class="form-control" id="product" name="gambar" required value="<?= $product["gambar"] ?>">
-                </div>
+
                 <button type="submit" class="btn btn-warning" name="submit">Ubah Data</button>
-                </form>
+                
+            </div>
+
+            <div class="col-7">
+                    <label for="gambar" class="form-label">Gambar</label>
+                    <img src="img/product/<?= $product["gambar"];?>" class="card mb-2" width="200">
+                    <input type="file" class="form-control" id="product" name="gambar">
+               </form>
+            </div>
+                
             </div>
 
         </div>

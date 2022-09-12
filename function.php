@@ -20,7 +20,12 @@ function tambah ($data){
     $nama = htmlspecialchars($data["nama"]);
     $harga = htmlspecialchars($data["harga"]);
     $kondisi = htmlspecialchars($data["kondisi"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+    
+    // upload gambar
+    $gambar = upload();
+    if(!$gambar){
+        return false;
+    }
 
     global $conn;
     $query = "INSERT INTO product_elektronik Values
@@ -33,6 +38,57 @@ function tambah ($data){
     return mysqli_affected_rows($conn);
 
 }
+
+function upload(){
+
+    $namaFile = $_FILES["gambar"]["name"];
+    $ukuranFile = $_FILES["gambar"]["size"];
+    $error = $_FILES["gambar"]["error"];
+    $tmpName = $_FILES["gambar"]["tmp_name"];
+
+    // cek apakah ada gambar yang diupload
+    if ( $error == 4 ){
+        echo "<script>
+            alert ('pilih gambar terlebih dahulu!');
+        </script>";
+    
+        return false;
+    }
+
+    // cek apakah yang diupload adalah gambar
+    $ekstensiGambarValid = ["jpg", "jpeg", "png"];
+    $ekstensiGambar = explode (".", $namaFile);
+    $ekstensiGambar = strtolower(end($ekstensiGambar));
+    if (!in_array($ekstensiGambar, $ekstensiGambarValid)){
+        echo "<script>
+            alert ('yang anda upload bukan gambar!');
+        </script>";
+    
+        return false;
+    }
+
+    // cek jika ukuranya terlalu besar
+    if ($ukuranFile > 1000000){
+        echo "<script>
+            alert ('ukuran gambar terlalu besar!');
+        </script>";
+    
+        return false;
+    }
+
+    // jika lolos pengecekan, maka gambar diupload!
+    // generate nama gambar baru
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= ".";
+    $namaFileBaru .= $ekstensiGambar;
+
+
+    move_uploaded_file($tmpName, 'img/product/' . $namaFileBaru);
+    return $namaFileBaru;
+
+}
+
+
 
 function hapus ($id){
     global $conn;
@@ -49,7 +105,14 @@ function ubah ($data){
     $nama = htmlspecialchars($data["nama"]);
     $harga = htmlspecialchars($data["harga"]);
     $kondisi = htmlspecialchars($data["kondisi"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+    $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+    // cek apakah user klik tambah baru atau tidak
+    if( $_FILES["gambar"]["error"] === 4 ){
+        $gambar = $gambarLama;
+    } else {  
+        $gambar = upload();
+    }
 
     global $conn;
     $query = "UPDATE product_elektronik SET
