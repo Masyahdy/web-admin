@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if ( !isset($_SESSION["login"])){
+    header("location:login.php");
+    exit;
+}
+
 require 'function.php';
 $product = query("SELECT * FROM product_elektronik");
 
@@ -38,7 +45,7 @@ if (isset($_POST["cari"])){
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="">Daftar Product</a>
+            <a class="nav-link active" aria-current="page" href="index.php">Daftar Product</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="tambah.php">Tambah Data</a>
@@ -64,7 +71,8 @@ if (isset($_POST["cari"])){
                  <p> <?php echo date("l, d-M-Y");?> </p>
             </div>
             <div class="col-6 mt-2 text-end">
-                 <a href="login.php"><button type="submit" class="btn btn-danger">Logout</button></a>
+                 <a href="logout.php"><button type="submit" class="btn btn-danger">Logout</button></a>
+
             </div>
         </div>
     </div>

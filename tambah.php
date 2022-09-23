@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if ( !isset($_SESSION["login"])){
+    header("location:login.php");
+    exit;
+}
+
 require 'function.php';
 // ini untuk daftar product
 $product = query("SELECT * FROM product_elektronik");
@@ -62,7 +69,7 @@ if (isset ($_POST["submit"])){
             <a class="nav-link" aria-current="page" href="index.php">Daftar Product</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link active" href="">Tambah Data</a>
+            <a class="nav-link active" href="tambah.php">Tambah Data</a>
             </li>
         </ul>
             <form class="d-flex ms-auto" action="" method="post">
@@ -85,7 +92,7 @@ if (isset ($_POST["submit"])){
                  <p> <?php echo date("l, d-M-Y");?> </p>
             </div>
             <div class="col-6 mt-2 text-end">
-                 <a href="login.php"><button type="submit" class="btn btn-danger">Logout</button></a>
+                 <a href="logout.php"><button type="submit" class="btn btn-danger">Logout</button></a>
             </div>
         </div>
     </div>

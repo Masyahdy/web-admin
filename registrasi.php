@@ -1,44 +1,17 @@
 <?php
-session_start();
-
-if (isset($_SESSION["login"])){
-  header("location:index.php");
-}
-
-
 require 'function.php';
 
-if (isset ($_POST["login"])){
-
-  $username = $_POST["username"];
-  $password = $_POST["password"];
-
-  $result = mysqli_query ($conn, "SELECT * FROM admin WHERE username= '$username'");
-
-  // cek username
-  if (mysqli_num_rows($result)==1){
-
-    // cek password 
-    $row = mysqli_fetch_assoc($result);
-
-    if (password_verify($password, $row["password"])){
-
-      // set session
-      $_SESSION["login"] = true;
-
-         header("location:index.php");
-            exit;
-        }
-
+if ( isset($_POST["register"]) ) {
+    if (registrasi($_POST) > 0){
+        echo "<script>
+                alert ('User baru berhasil ditambahkan!');
+              </script>";
+    } else {
+        echo mysqli_error($conn);
     }
-
-    $error = true;
 }
 
-
-
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -53,21 +26,20 @@ if (isset ($_POST["login"])){
     <!-- my css -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Halaman login</title>
+    <title>Halaman Registrasi</title>
   </head>
   <body>
    
-    <!-- Login Admin -->
-    <section id="login">
+    <!-- Registrasi Admin -->
+    <section id="registrasi">
       <div class="container">  
         <div class="row justify-content-center">
           <div class="col-md-6 form kotak">
             <div class="mt-3 mb-3 text-center">
-                <h3>Login User</h3>
+                <h3>Registrasi User</h3>
             </div>
-
             <form action="" method="post">
-              <div class="mb-3">    
+              <div class="mb-3">   
                 <input type="text" class="form-control" placeholder="username" id="inputPassword" name="username">
               </div>
 
@@ -75,12 +47,15 @@ if (isset ($_POST["login"])){
                  <input type="password" class="form-control" name="password" placeholder="password" id="inputPassword">
               </div>
 
-              <div class="mb-3 text-center">
-                <button type="submit" class="btn btn-primary" name="login">Login</button>
-                <p>No account yet ? <a href="registrasi.php" style="color:green;">Sign Up</a></p>
+              <div class="mb-3">
+                 <input type="password" class="form-control" name="password2" placeholder="konfirmasi password" id="inputPassword2">
               </div>
 
-              
+              <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-success" name="register">Sign Up</button>
+                <p>Already have an account ? <a href="login.php" style="color:red;">Sign In</a> </p>
+              </div>
+
             </form>
 
           </div>

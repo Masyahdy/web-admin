@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if ( !isset($_SESSION["login"])){
+    header("location:login.php");
+    exit;
+}
+
 require 'function.php';
 
 // untuk mengambil data dari URL
@@ -64,10 +71,10 @@ if (isset ($_POST["submit"])){
             <a class="nav-link" href="tambah.php">Tambah Data</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link active" href="">Ubah Data</a>
+            <a class="nav-link active" href="ubah.php">Ubah Data</a>
             </li>
         </ul>
-        <a href="login.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
+        <a href="logout.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
         </div>
     </div>
     </nav>
