@@ -58,7 +58,7 @@ if (isset ($_POST["submit"])){
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="admin.php">Daftar Product</a>
+            <a class="nav-link" aria-current="page" href="index.php">Daftar Product</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="tambah.php">Tambah Data</a>
@@ -67,7 +67,7 @@ if (isset ($_POST["submit"])){
             <a class="nav-link active" href="">Ubah Data</a>
             </li>
         </ul>
-        <a href="index.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
+        <a href="login.php" class="ms-auto"><button type="submit" class="btn btn-danger">Logout</button></a>
         </div>
     </div>
     </nav>

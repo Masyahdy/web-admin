@@ -59,7 +59,7 @@ if (isset ($_POST["submit"])){
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="admin.php">Daftar Product</a>
+            <a class="nav-link" aria-current="page" href="index.php">Daftar Product</a>
             </li>
             <li class="nav-item">
             <a class="nav-link active" href="">Tambah Data</a>
@@ -85,7 +85,7 @@ if (isset ($_POST["submit"])){
                  <p> <?php echo date("l, d-M-Y");?> </p>
             </div>
             <div class="col-6 mt-2 text-end">
-                 <a href="index.php"><button type="submit" class="btn btn-danger">Logout</button></a>
+                 <a href="login.php"><button type="submit" class="btn btn-danger">Logout</button></a>
             </div>
         </div>
     </div>
