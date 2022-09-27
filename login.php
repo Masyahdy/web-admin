@@ -1,12 +1,27 @@
 <?php
 session_start();
+require 'function.php';
+
+// cek cookie
+if ( isset($_COOKIE['id']) && isset($_COOKIE['key']) ) {
+  $id = $_COOKIE['id'];
+  $key = $_COOKIE['key'];
+
+  // ambil username berdasarkan id
+  $result = mysqli_query($conn, "SELECT username FROM admin WHERE id = $id" );
+  $row = mysqli_fetch_assoc($result);
+
+  // cek cookie dan username
+  if ($key === hash('sha256', $row['username'])) {
+      $_SESSION ['login'] = true ;
+  }
+
+}
 
 if (isset($_SESSION["login"])){
   header("location:index.php");
 }
 
-
-require 'function.php';
 
 if (isset ($_POST["login"])){
 
@@ -26,9 +41,16 @@ if (isset ($_POST["login"])){
       // set session
       $_SESSION["login"] = true;
 
-         header("location:index.php");
-            exit;
+      // cek remember me
+      if( isset($_POST['remember']) ){
+        // buat cookie
+        setcookie( 'id', $row['id'], time() +3600 );
+        setcookie( 'key', hash('sha256', $row['username']), time()+3600 );
         }
+
+     header("location:index.php");
+           exit;
+     }
 
     }
 
@@ -56,10 +78,20 @@ if (isset ($_POST["login"])){
     <title>Halaman login</title>
   </head>
   <body>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="login.php">
+       <img src="img/logo.png" alt="" width="150" height="30">
+      </a>
+    </div>
+    </nav>
+    <!-- akhir navbar -->
    
     <!-- Login Admin -->
     <section id="login">
-      <div class="container">  
+      <div class="container mt-5">  
         <div class="row justify-content-center">
           <div class="col-md-6 form kotak">
             <div class="mt-3 mb-3 text-center">
@@ -73,6 +105,11 @@ if (isset ($_POST["login"])){
 
               <div class="mb-3">
                  <input type="password" class="form-control" name="password" placeholder="password" id="inputPassword">
+              </div>
+
+              <div class="mb-3">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Remember me</label>
               </div>
 
               <div class="mb-3 text-center">

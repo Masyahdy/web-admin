@@ -29,10 +29,19 @@ if ( isset($_POST["register"]) ) {
     <title>Halaman Registrasi</title>
   </head>
   <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+    <a class="navbar-brand" href="registrasi.php">
+    <img src="img/logo.png" alt="" width="150" height="30">
+    </a>
+    </div>
+    </nav>
+    <!-- akhir navbar -->
    
     <!-- Registrasi Admin -->
     <section id="registrasi">
-      <div class="container">  
+      <div class="container mt-5">  
         <div class="row justify-content-center">
           <div class="col-md-6 form kotak">
             <div class="mt-3 mb-3 text-center">
