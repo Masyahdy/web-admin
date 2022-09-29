@@ -7,7 +7,17 @@ if ( !isset($_SESSION["login"])){
 }
 
 require 'function.php';
-$product = query("SELECT * FROM product_elektronik");
+
+// pagination
+// konfigurasi
+$jumlahDataPerhalaman = 5;
+$jumlahData = count(query("SELECT * FROM product_elektronik"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+$halamanAktif = ( isset($_GET["halaman"]) ? $_GET["halaman"] : 1 );
+
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman ;
+
+$product = query("SELECT * FROM product_elektronik LIMIT $awalData, $jumlahDataPerhalaman");
 
 // jika tombol cari ditekan
 if (isset($_POST["cari"])){
@@ -85,6 +95,24 @@ if (isset($_POST["cari"])){
      <div class="container">
         <div class="row">
             <div class="col">
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                <?php if ($halamanAktif > 1) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?halaman= <?php echo $halamanAktif -1?> ">Previous</a></li>
+                <?php endif; ?>
+
+                <?php for( $i=1; $i<=$jumlahHalaman; $i++ ) : ?>
+                    <li class="page-item"><a class="page-link" href="?halaman=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                <?php endfor; ?>
+
+                <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?halaman= <?php echo $halamanAktif + 1 ?> ">Next</a></li>
+                <?php endif; ?>
+                </ul>
+            </nav>
                 <table class="table table-success table-hover">
                     <tr>
                      <th>No.</th>
@@ -98,7 +126,7 @@ if (isset($_POST["cari"])){
             <?php $i=1;?>
             <?php foreach ($product as $row) {?>
                     <tr>
-                     <td><?php echo $i ?></td>
+                     <td><?php echo $i + $awalData ?></td>
                      <td><a href="ubah.php?id=<?= $row["id"]?>"><button type="submit" class="btn btn-warning" name="submit">Ubah</button></a> | 
                      <a href="hapus.php?id=<?= $row["id"]?>" onclick ="return confirm('Apakah benar data ingin dihapus!')"><button type="submit" class="btn btn-danger" name="submit">Hapus</button></a>
                      </td>

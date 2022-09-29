@@ -7,8 +7,18 @@ if ( !isset($_SESSION["login"])){
 }
 
 require 'function.php';
+
+// pagination
+// konfigurasi
+$jumlahDataPerhalaman = 5;
+$jumlahData = count(query("SELECT * FROM product_elektronik"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerhalaman);
+$halamanAktif = ( isset($_GET["halaman"]) ? $_GET["halaman"] : 1 );
+
+$awalData = ($jumlahDataPerhalaman * $halamanAktif) - $jumlahDataPerhalaman ;
+
 // ini untuk daftar product
-$product = query("SELECT * FROM product_elektronik");
+$product = query("SELECT * FROM product_elektronik LIMIT $awalData, $jumlahDataPerhalaman");
 
 // ini untuk cari
 // jika tombol cari ditekan
@@ -23,7 +33,7 @@ if (isset ($_POST["submit"])){
       echo "
             <script> 
               alert ('data berhasil ditambahkan!');
-              document.location.href = 'tambah.php';
+              document.location.href ='tambah.php?halaman=$jumlahHalaman';
             </script>
            ";
     } else {
@@ -130,6 +140,25 @@ if (isset ($_POST["submit"])){
             </div>
 
             <div class="col-7">
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                <?php if ($halamanAktif > 1) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?halaman= <?php echo $halamanAktif -1?> ">Previous</a></li>
+                <?php endif; ?>
+
+                <?php for( $i=1; $i<=$jumlahHalaman; $i++ ) : ?>
+                    <li class="page-item"><a class="page-link" href="?halaman=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                <?php endfor; ?>
+
+                <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?halaman= <?php echo $halamanAktif + 1 ?> ">Next</a></li>
+                <?php endif; ?>
+                </ul>
+            </nav>
+
             <table class="table table-success table-hover">
                     <tr>
                      <th>No.</th>
@@ -142,7 +171,7 @@ if (isset ($_POST["submit"])){
             <?php $i=1;?>
             <?php foreach ($product as $row) {?>
                     <tr>
-                     <td><?php echo $i ?></td>
+                     <td><?php echo $i + $awalData ?></td>
                      <td><img src="img/product/<?php echo $row["gambar"]?>" width="50"></td>
                      <td><?php echo $row["product"]?></td>
                      <td><?php echo $row["nama"]?></td>
